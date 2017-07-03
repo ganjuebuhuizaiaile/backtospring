@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xmlns:aop="http://www.springframework.org/schema/aop"
+    xsi:schemaLocation="http://www.springframework.org/schema/beans 
+        http://www.springframework.org/schema/beans/spring-beans.xsd  
+        http://www.springframework.org/schema/aop 
+        http://www.springframework.org/schema/aop/spring-aop-4.0.xsd">
+
+	<bean id="moocAspect" class="com.imooc.aop.schema.advice.MoocAspect"></bean>
+	
+	<bean id="aspectBiz" class="com.imooc.aop.schema.advice.biz.AspectBiz"></bean>
+	
+	<aop:config>
+		<!-- aspect切面，指定bean对象 -->
+		<aop:aspect id="moocAspectAOP" ref="moocAspect">
+				
+				<!-- pointcut切点，指定哪些返回值的哪些类的方法，会被切入 -->
+<!-- 			<aop:pointcut expression="execution(* com.imooc.aop.schema.advice.biz.*Biz.*(..))" id="moocPiontcut"/> -->
+				
+				<!-- before，method指定aspect里指定的bean对象里的哪些方法，会去实际切入pointcut-ref的切点 -->
+<!-- 			<aop:before method="before" pointcut-ref="moocPiontcut"/> -->
+<!-- 			<aop:after-returning method="afterReturning" pointcut-ref="moocPiontcut"/> -->
+<!-- 			<aop:after-throwing method="afterThrowing" pointcut-ref="moocPiontcut"/> -->
+<!-- 			<aop:after method="after" pointcut-ref="moocPiontcut"/> -->
+<!-- 			<aop:around method="around" pointcut-ref="moocPiontcut"/> -->
+			
+<!-- 			<aop:around method="aroundInit" pointcut="execution(* com.imooc.aop.schema.advice.biz.AspectBiz.init(String, int))  -->
+<!-- 							and args(bizName, times)"/> -->
+
+<!-- 让指定包下的所有类任意方法都   动态实现   指定的接口，让其拥有该接口的实现方法，implement-interface接口，default-impl实现类，调用的时候就是那个bean。实现那类方法 -->
+				<aop:declare-parents types-matching="com.imooc.aop.schema.advice.biz.*(+)" 
+							implement-interface="com.imooc.aop.schema.advice.Fit"
+							default-impl="com.imooc.aop.schema.advice.FitImpl"/>
+		</aop:aspect>
+	</aop:config>
+
+ </beans>
